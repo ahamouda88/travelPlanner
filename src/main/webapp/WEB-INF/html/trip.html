@@ -1,0 +1,51 @@
+<div data-ng-controller="TripController">
+	<div class="page-header">
+		<h2>Add/Update Trip</h2>
+	</div>
+	<form name="tripForm" class="form-horizontal" data-ng-submit="addUpdateTrip()" data-ng-init="initTripPage()">
+		<!-- User Id field -->
+		<input data-ng-model="trip.Id" type="hidden" id="tripId"/>
+		<input data-ng-model="trip.version" type="hidden" id="version"/>
+		<!-- Destination Drop-down List -->
+	    <div class="form-group">
+	        <label for="inputDestination" class="control-label col-xs-2">Destination</label>
+	        <div class="col-xs-10">
+		       	<select data-ng-model="trip.destination" class="form-control" id="inputDestination" data-ng-options="country as country for country in countries" required>
+	  				<option value="">Select a destination</option>
+				</select>
+			</div>
+	    </div>
+	    <!-- Start Date -->
+		<div class="form-group">
+			<label for="inputStartDate" class="control-label col-xs-2">Start Date</label>
+			<div class="col-xs-10">
+				<input data-ng-model="trip.startDate" class="form-control" type="date" id="inputStartDate" required>
+ 			</div>
+		</div>
+	    <!-- End Date -->
+	    <div class="form-group">
+			<label for="inputEndDate" class="control-label col-xs-2">End Date</label>
+			<div class="col-xs-10">
+				<input data-ng-model="trip.endDate" class="form-control" type="date" id="inputEndDate" required>
+ 			</div>
+		</div>
+	    <!-- Comment field -->
+		<div class="form-group">
+			<label for="inputComment" class="control-label col-xs-2">Comment</label>
+			<div class="col-xs-10">
+				<textarea data-ng-model="trip.comment" class="form-control" rows="5" id="inputComment" placeholder="Comment"></textarea>
+			</div>
+		</div>
+		<!-- Submit Button -->
+	    <div class="form-group">
+	        <div class="col-xs-offset-2 col-xs-10">
+	            <button type="submit" class="btn btn-primary">Submit</button>
+	            <a href="#/trips" class="btn btn-default">Back</a>
+	        </div>
+	    </div>
+	    <!-- Status messages -->
+		<div data-ng-if="trip.response.id && insert" class="alert alert-success" role="alert"><strong>Great!</strong> Trip with Id {{trip.response.id}} is created successfully.</div>
+	   	<div data-ng-if="trip.response.id && !insert" class="alert alert-success" role="alert"><strong>Great!</strong> Trip with Id {{trip.response.id}} is updated successfully.</div>
+	    <div data-ng-if="trip.response.errorCode" class="alert alert-danger" role="alert">{{ trip.response.message }}</div>
+	</form>
+</div>

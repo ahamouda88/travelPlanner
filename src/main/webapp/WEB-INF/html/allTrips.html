@@ -1,0 +1,74 @@
+<div data-ng-controller="TripController">
+	<div class="page-header">
+		<h2>All Trips</h2>
+	</div>
+	<div data-ng-init="getAllTrips()">
+		<form name="filterTripForm" class="form-horizontal">
+			<!-- Destination Drop-down List -->
+		    <div class="form-group">
+		        <label for="inputDestination" class="control-label col-xs-2">Destination</label>
+		        <div class="col-xs-10">
+			       	<select data-ng-model="filter.trip" class="form-control" id="inputDestination" 
+			       		data-ng-options="trip.destination for trip in tripSet track by trip.id" data-ng-change="filterTrips()">
+		  				<option value="">Select a destination</option>
+					</select>
+				</div>
+		    </div>
+		    <!-- Start Date -->
+			<div class="form-group">
+				<label for="inputStartDate" class="control-label col-xs-2">Start Date</label>
+				<div class="col-xs-10">
+					<input data-ng-model="filter.startDate" class="form-control" type="date" id="inputStartDate" data-ng-model-options="{updateOn: 'blur'}" data-ng-change="filterTrips()"> 
+	 			</div>
+			</div>
+		    <!-- End Date -->
+		    <div class="form-group">
+				<label for="inputEndDate" class="control-label col-xs-2">End Date</label>
+				<div class="col-xs-10">
+					<input data-ng-model="filter.endDate" class="form-control" type="date" id="inputEndDate" data-ng-model-options="{updateOn: 'blur'}" data-ng-required="trip.filter.startDate" data-ng-change="filterTrips()">
+	 			</div>
+			</div>
+		</form>
+		<table class="table table-striped">
+	  		<thead class="thead-inverse">
+		    	<tr>
+		      		<th>#Id</th>
+		      		<th>Destination</th>
+		      		<th>Start Date</th>
+		      		<th>End Date</th>
+		      		<th>Comment</th>
+		      		<th>Days Left</th>
+		      		<th data-ng-show="(currentUser.role === 'ADMIN' || currentUser.role === 'USER_MANAGER')">User</th>
+		      		<th>Edit?</th>
+		      		<th>Delete?</th>
+		   	 	</tr>
+	  		</thead>
+	  		<tbody>
+	    		<tr data-ng-repeat="trip in trips | filter:tablePagination.paginate">
+	    			<td>{{ trip.id }}</td>
+					<td>{{ trip.destination }}</td>
+					<td>{{ trip.startDate | dateFormat }}</td>
+					<td>{{ trip.endDate | dateFormat }}</td>
+					<td>{{ trip.comment | limitTo: 40 }}{{trip.comment.length > 40 ? '...' : ''}}</td>
+					<td>{{ trip.dayCount }}</td>
+					<td data-ng-show="(currentUser.role === 'ADMIN' || currentUser.role === 'USER_MANAGER')">{{ trip.user.username }}</td>
+					<td>
+						<a href="#/trip" class="btn btn-primary btn-md" data-ng-click="setTargetTrip(trip)">Edit</a>
+					</td>
+					<td>
+						<button type="button" class="btn btn-md btn-danger" data-ng-click="deleteTrip(trip)">
+							<i class="glyphicon glyphicon-remove-circle"></i>
+						</button>
+					</td>
+			    </tr>
+	  		</tbody>
+		</table>
+		<ul class="breadcrumb">
+            <li><button class="btn btn-xs" data-ng-disabled="currentPage === 1"  data-ng-click="setPrev()">Prev</button></li>
+            <li>{{ currentPage }}</li>
+            <li><button class="btn btn-xs" data-ng-disabled="tablePagination.maxPage === 0 || currentPage === tablePagination.maxPage" data-ng-click="setNext()">Next</button></li>
+        </ul>
+		<a href="#/trip" class="btn btn-primary btn-md">Add Trip</a>
+		<a href="#/trips/next-month" class="btn btn-default btn-md">Next Month Trips</a>
+	</div>
+</div>

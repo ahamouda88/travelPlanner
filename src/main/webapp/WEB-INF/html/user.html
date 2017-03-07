@@ -1,0 +1,68 @@
+<div data-ng-controller="UserController">
+	<div class="page-header">
+		<h2>Add/Update User</h2>
+	</div>
+	<form name="userForm" class="form-horizontal" data-ng-submit="addUpdateUser()" data-ng-init="getTargetUser()">
+		<!-- User Id field -->
+		<input data-ng-model="user.Id" type="hidden" id="userId"/>
+		<input data-ng-model="user.version" type="hidden" id="version"/>
+		<!-- First Name field -->
+	    <div class="form-group">
+	        <label for="inputFirstName" class="control-label col-xs-2">First Name</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.firstName" class="form-control" id="inputFirstName" placeholder="First Name" required>
+	        </div>
+	    </div>
+	    <!-- Last Name field -->
+	    <div class="form-group">
+	        <label for="inputLastName" class="control-label col-xs-2">Last Name</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.lastName" class="form-control" id="inputLastName" placeholder="Last Name" required>
+	        </div>
+	    </div>
+		<!-- Username field -->
+	    <div class="form-group">
+	        <label for="inputUsername" class="control-label col-xs-2">Username</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.username" class="form-control" id="inputUsername" placeholder="Username" required>
+	        </div>
+	    </div>
+	    <!-- Password field -->
+	    <div class="form-group">
+	        <label for="inputPassword" class="control-label col-xs-2">Password</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+	        </div>
+	    </div>
+	    <!-- Confirm Password field -->
+	    <div class="form-group">
+	        <label for="inputConfirmPassword" class="control-label col-xs-2">Confirm Password</label>
+	        <div class="col-xs-10">
+	            <input data-ng-model="user.confirmPassword" type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" required>
+	        </div>
+	    </div>
+	    <!-- Role Drop-down List -->
+		<div class="form-group" data-ng-show="currentUser.role === 'ADMIN'">
+			<label for="inputRole" class="control-label col-xs-2">Role</label>
+			<div class="col-xs-10">
+				<select data-ng-model="user.role" class="form-control" id="sel1" data-ng-required="currentUser.role === 'ADMIN'">
+					<option value=""></option>
+					<option value="ADMIN">Admin</option>
+					<option value="USER_MANAGER">User Manager</option>
+					<option value="REGULAR_USER">Regular User</option>
+				</select>
+			</div>
+		</div>
+		<!-- Submit Button -->
+	    <div class="form-group">
+	        <div class="col-xs-offset-2 col-xs-10">
+	            <button type="submit" class="btn btn-primary">Submit</button>
+	            <a href="#/users" class="btn btn-default">Back</a>
+	        </div>
+	    </div>
+	    <!-- Status messages -->
+		<div data-ng-if="user.response.id && insert" class="alert alert-success" role="alert"><strong>Great!</strong> User {{user.response.username}} is created successfully.</div>
+	   	<div data-ng-if="user.response.id && !insert" class="alert alert-success" role="alert"><strong>Great!</strong> User {{user.response.username}} is updated successfully.</div>
+	    <div data-ng-if="user.response.errorCode" class="alert alert-danger" role="alert">{{ user.response.message }}</div>
+	</form>
+</div>

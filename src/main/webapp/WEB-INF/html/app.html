@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="./webjars/bootstrap/3.3.6/css/bootstrap.css">
+		<title>Travel Planner</title>
+	</head>
+	<body data-ng-app="application" data-ng-controller="NavigationController">
+		<nav class="navbar navbar-inverse">
+	  		<div class="container-fluid">
+	    		<div class="navbar-header">
+	    			<a href="#/" class="navbar-brand" >Travel Planner</a>
+	   			</div>
+	   			<ul class="nav navbar-nav">
+      				<li><a href="#/trips" data-ng-show="(currentUser.role === 'ADMIN' || currentUser.role === 'REGULAR_USER')">Trips</a></li>
+      				<li><a href="#/users" data-ng-show="(currentUser.role === 'ADMIN' || currentUser.role === 'USER_MANAGER')">Users</a></li>
+    			</ul>
+	    		<div class="collapse navbar-collapse" id="myNavbar">
+	      			<ul class="nav navbar-nav navbar-right">
+	        			<li><a href="#/user"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+	        			<li><a href="#/login" data-ng-show="!authenticated"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+	        			<li><a href="" data-ng-show="authenticated" data-ng-click="logoutUser()">Logout</a></li>
+	      			</ul>
+	    		</div>
+	  		</div>
+		</nav>
+		<div data-ng-view></div>
+		
+    	<!-- scripts -->
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular.js"></script>
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular-resource.js"></script>
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular-route.js"></script>
+		<script type="text/javascript" src="./webjars/angularjs/1.4.8/angular-cookies.js"></script>
+		<script type="text/javascript" src="../resources/static/js/app.js"></script>
+		<script type="text/javascript" src="../resources/static/js/userService.js"></script> 
+		<script type="text/javascript" src="../resources/static/js/userController.js"></script>
+		<script type="text/javascript" src="../resources/static/js/tripService.js"></script> 
+		<script type="text/javascript" src="../resources/static/js/pagerService.js"></script>
+		<script type="text/javascript" src="../resources/static/js/tripController.js"></script>
+		<script type="text/javascript" src="../resources/static/js/navigationController.js"></script>
+	</body>
+</html>

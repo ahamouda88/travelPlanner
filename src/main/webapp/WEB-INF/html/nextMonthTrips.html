@@ -1,0 +1,31 @@
+<div data-ng-controller="TripController">
+	<div data-ng-init="getNextMonthTrips()" id="nextMonthTrips">
+		<div class="page-header">
+			<h2>Next Month Trips</h2>
+		</div>
+		<table class="table table-striped">
+	  		<thead class="thead-inverse">
+		    	<tr>
+		      		<th>#Id</th>
+		      		<th>Destination</th>
+		      		<th>Start Date (MM/DD/YYYY)</th>
+		      		<th>End Date (MM/DD/YYYY)</th>
+		      		<th>Comment</th>
+		      		<th>Days Left</th>
+		   	 	</tr>
+	  		</thead>
+	  		<tbody>
+	    		<tr data-ng-repeat="trip in trips">
+	    			<td>{{ trip.id }}</td>
+					<td>{{ trip.destination }}</td>
+					<td>{{ trip.startDate | date:'MM/dd/yyyy' }}</td>
+					<td>{{ trip.endDate | date:'MM/dd/yyyy' }}</td>
+					<td>{{ trip.comment }}</td>
+					<td>{{ trip.dayCount }}</td>
+			    </tr>
+	  		</tbody>
+		</table>
+	</div>
+	<a href="#trips" class="btn btn-primary btn-md">Back</a>
+	<button type="button" class="btn btn-md btn-danger" data-ng-click="print('nextMonthTrips')">Print</button>
+</div>

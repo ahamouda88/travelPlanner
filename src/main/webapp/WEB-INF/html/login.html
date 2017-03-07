@@ -1,0 +1,22 @@
+<div id="loginDiv" data-ng-show="!authenticated">
+	<div class="page-header">
+		<h2>Please Login</h2>
+	</div>
+	<div class="container" >
+		<div class="alert alert-danger" data-ng-show="loginError">
+			There was a problem logging in. Please try again.
+		</div>
+	   	<div class="card card-container">
+	   		<form class="form-signin" data-ng-submit="loginUser()">
+	            <input data-ng-model="credentials.username" type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+	            <input data-ng-model="credentials.password" type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+	            <input class="btn btn-lg btn-primary btn-block btn-signin" name="submit" type="submit" value="Sign In">
+	        </form>
+	   	</div>
+	</div>
+</div>
+<div id="logoutDiv" data-ng-show="authenticated">
+	<div class="page-header">
+		<h2>Want to <a href="" data-ng-show="authenticated" data-ng-click="logoutUser()">Logout</a>?</h2>
+	</div>
+</div>
