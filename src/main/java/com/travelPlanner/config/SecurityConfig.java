@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 
@@ -22,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private AuthenticationEntryPoint authenticationEntryPoint;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -34,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/all/view/user").permitAll()
 				// RESTful API Requests
-				.antMatchers("/api/users/**").permitAll()
-				.antMatchers("/api/trips/**").permitAll()
+//				.antMatchers("/api/users/**").permitAll()
+//				.antMatchers("/api/trips/**").permitAll()
 				// AngularJS routes
 				.antMatchers("/usr/**").hasAnyRole("REGULAR_USER", "ADMIN")
 				.antMatchers("/usrmgr/**").hasAnyRole("USER_MANAGER", "ADMIN")
@@ -50,8 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.logoutUrl("/logout").logoutSuccessHandler(successHandler)
 					.deleteCookies("JSESSIONID","CURRENT_USER").invalidateHttpSession(false).permitAll()
 			.and()
-				.csrf().disable()//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
+				.csrf()
+					.disable()//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+				.exceptionHandling()
+					.authenticationEntryPoint(authenticationEntryPoint);
 		//@formatter:on
 	}
 
