@@ -19,9 +19,13 @@ public class CurrentUserDetails implements UserDetails {
 
 	private final static String ROLE_PREFIX = "ROLE_";
 	private User user;
+	private List<GrantedAuthority> authorities;
 
 	public CurrentUserDetails(User user) {
 		this.user = user;
+		this.authorities = new ArrayList<>();
+
+		if (user != null) authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + user.getRole().name()));
 	}
 
 	public User getUser() {
@@ -30,9 +34,7 @@ public class CurrentUserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + user.getRole().name()));
-		return grantedAuthorities;
+		return authorities;
 	}
 
 	@Override

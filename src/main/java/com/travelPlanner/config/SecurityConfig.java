@@ -2,6 +2,7 @@ package com.travelPlanner.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -23,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private AuthenticationEntryPoint authenticationEntryPoint;
 
@@ -38,8 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/all/view/user").permitAll()
 				// RESTful API Requests
-//				.antMatchers("/api/users/**").permitAll()
-//				.antMatchers("/api/trips/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("USER_MANAGER", "ADMIN")
+				.antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole("USER_MANAGER", "ADMIN")
+				.antMatchers(HttpMethod.POST, "/api/trips/**").hasAnyRole("REGULAR_USER", "ADMIN")
+				.antMatchers(HttpMethod.PUT, "/api/trips/**").hasAnyRole("REGULAR_USER", "ADMIN")
+				.antMatchers(HttpMethod.DELETE, "/api/trips/**").hasAnyRole("REGULAR_USER", "ADMIN")
 				// AngularJS routes
 				.antMatchers("/usr/**").hasAnyRole("REGULAR_USER", "ADMIN")
 				.antMatchers("/usrmgr/**").hasAnyRole("USER_MANAGER", "ADMIN")
@@ -55,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.deleteCookies("JSESSIONID","CURRENT_USER").invalidateHttpSession(false).permitAll()
 			.and()
 				.csrf()
-					.disable()//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+					.disable()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 				.exceptionHandling()
 					.authenticationEntryPoint(authenticationEntryPoint);

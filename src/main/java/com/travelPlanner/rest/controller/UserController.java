@@ -40,9 +40,22 @@ public class UserController {
 		}
 	}
 
+	/*
+	 * 
+		Authentication activeUser
+	
+		
+		SecurityContextHolderAwareRequestWrapper request
+		public String createForm(HttpSession session, HttpServletRequest request,  ModelMap   modelMap) {
+		    if (request.isUserInRole("ROLE_ADMIN")) {
+		        // code here
+		    }
+		}
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> createUser(@RequestBody User user) {
+	public ResponseEntity<User> createUser(@RequestBody User user) {		
 		boolean inserted = userService.createUser(user);
+		
 		return inserted ? new ResponseEntity<User>(user, HttpStatus.CREATED)
 				: new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
 	}
