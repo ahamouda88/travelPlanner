@@ -36,7 +36,7 @@ import com.travelPlanner.persist.entity.UserRole;
 public class AuthenticationTest {
 
 	@Autowired
-	private WebApplicationContext context;
+	private WebApplicationContext webApplicationContext;
 
 	private MockMvc mockMvc;
 	protected ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +45,7 @@ public class AuthenticationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(SecurityMockMvcConfigurers.springSecurity())
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(SecurityMockMvcConfigurers.springSecurity())
 				.build();
 
 		// Create ADMIN user

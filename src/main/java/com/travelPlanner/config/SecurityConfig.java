@@ -39,10 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/all/view/user").permitAll()
 				// RESTful API Requests
-				.antMatchers(HttpMethod.GET, "/api/**").permitAll() //TODO: will need to filter by user (A user can't display other user's stuff)
+//				.antMatchers(HttpMethod.GET, "/api/**").permitAll() //TODO: will need to filter by user (A user can't display other user's stuff)
 				.antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
 				.antMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("USER_MANAGER", "ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole("USER_MANAGER", "ADMIN")
+				.antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("USER_MANAGER", "ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/trips/**").hasAnyRole("REGULAR_USER", "ADMIN")
 				.antMatchers(HttpMethod.PUT, "/api/trips/**").hasAnyRole("REGULAR_USER", "ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/api/trips/**").hasAnyRole("REGULAR_USER", "ADMIN")
