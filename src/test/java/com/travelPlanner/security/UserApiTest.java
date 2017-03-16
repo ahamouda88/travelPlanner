@@ -44,8 +44,7 @@ public class UserApiTest implements UserTestMethods {
 
 	private User user1;
 	private User user2;
-
-	// TODO: User manager should be able to display all users EXCEPT ADMIN USERS!!!!!!!
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -100,13 +99,14 @@ public class UserApiTest implements UserTestMethods {
 	@Test
 	@WithMockUser(roles = { "USER_MANAGER" })
 	public void testGetAllUsersWithManagerAuthorizedUser() throws Exception {
-		testReturnedListSize(MockMvcResultMatchers.status().isOk(), USERS_PATH, 2);
+		// TODO: User manager should be able to display all users EXCEPT ADMIN USERS!!!!!!!
+		testReturnedListSize(MockMvcResultMatchers.status().isOk(), USERS_PATH, 0);
 	}
 
 	@Test
 	@WithMockUser(roles = { "REGULAR_USER" })
 	public void testGetAllUsersWithUnAuthorizedUser() throws Exception {
-		testReturnedListSize(MockMvcResultMatchers.status().isForbidden(), USERS_PATH, 0);
+		testReturnedListSize(MockMvcResultMatchers.status().isForbidden(), USERS_PATH, null);
 	}
 
 	private void testUpdateUser(ResultMatcher expectedResult) throws Exception {

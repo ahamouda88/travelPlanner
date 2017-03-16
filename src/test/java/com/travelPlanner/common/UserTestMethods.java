@@ -47,9 +47,10 @@ public interface UserTestMethods {
 	 * @throws Exception
 	 *             if the test fails, and list is not returned
 	 */
-	public default <T> void testReturnedListSize(ResultMatcher expectedResult, String path, int size) throws Exception {
+	public default <T> void testReturnedListSize(ResultMatcher expectedResult, String path, Integer size)
+			throws Exception {
 		ResultActions action = getMockMvc().perform(MockMvcRequestBuilders.get(path)).andExpect(expectedResult);
-		if (size > 0) {
+		if (size != null && size >= 0) {
 			action.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(size)));
 		}
 	}
