@@ -33,7 +33,7 @@ import com.travelPlanner.persist.entity.UserRole;
 @WebAppConfiguration
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
-public class UsersApiTest implements UserTestMethods {
+public class UserApiTest implements UserTestMethods {
 
 	private final static String USERS_PATH = "/api/users";
 
