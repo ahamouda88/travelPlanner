@@ -99,7 +99,7 @@ public class UserApiTest implements UserTestMethods {
 	@Test
 	@WithMockUser(roles = { "USER_MANAGER" })
 	public void testGetAllUsersWithManagerAuthorizedUser() throws Exception {
-		// TODO: User manager should be able to display all users EXCEPT ADMIN USERS!!!!!!!
+		// TODO: Will fail! User manager should be able to display all users EXCEPT ADMIN USERS!!!!!!!
 		testReturnedListSize(MockMvcResultMatchers.status().isOk(), USERS_PATH, 0);
 	}
 

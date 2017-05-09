@@ -40,31 +40,19 @@ public class UserController {
 		}
 	}
 
-	/*
-	 * 
-		Authentication activeUser
-	
-		
-		SecurityContextHolderAwareRequestWrapper request
-		public String createForm(HttpSession session, HttpServletRequest request,  ModelMap   modelMap) {
-		    if (request.isUserInRole("ROLE_ADMIN")) {
-		        // code here
-		    }
-		}
-	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> createUser(@RequestBody User user) {		
+	public ResponseEntity<User> createUser(@RequestBody User user) {
 		boolean inserted = userService.createUser(user);
-		
+
 		return inserted ? new ResponseEntity<User>(user, HttpStatus.CREATED)
-				: new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
+				: new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		boolean updated = userService.updateUser(user);
 		return updated ? new ResponseEntity<User>(user, HttpStatus.OK)
-				: new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
+				: new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
@@ -75,7 +63,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getAllUsers() {
-		return new ResponseEntity<List<User>>(userService.getAllUsers(), HttpStatus.OK);
+		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = PathConstants.ID_PATH, method = RequestMethod.GET)
@@ -92,6 +80,6 @@ public class UserController {
 		if (data == null) {
 			throw new EntityDoesnotExistException(message);
 		}
-		return new ResponseEntity<T>(data, HttpStatus.OK);
+		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 }

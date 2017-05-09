@@ -41,7 +41,7 @@ public class TripController {
 
 		boolean inserted = tripService.createTrip(trip);
 		return inserted ? new ResponseEntity<Trip>(trip, HttpStatus.CREATED)
-				: new ResponseEntity<Trip>(trip, HttpStatus.BAD_REQUEST);
+				: new ResponseEntity<>(trip, HttpStatus.BAD_REQUEST);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
@@ -63,7 +63,7 @@ public class TripController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Trip>> getAllTrips() {
-		return new ResponseEntity<List<Trip>>(tripService.getAllTrips(), HttpStatus.OK);
+		return new ResponseEntity<>(tripService.getAllTrips(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = PathConstants.ID_PATH, method = RequestMethod.GET)
@@ -96,13 +96,13 @@ public class TripController {
 		while (iterator.hasNext()) {
 			countries.add(iterator.next());
 		}
-		return new ResponseEntity<List<String>>(countries, HttpStatus.OK);
+		return new ResponseEntity<>(countries, HttpStatus.OK);
 	}
 
 	private <T> ResponseEntity<T> validateAndGetTripEntity(T data, String message) {
 		if (data == null) {
 			throw new EntityDoesnotExistException(message);
 		}
-		return new ResponseEntity<T>(data, HttpStatus.OK);
+		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 }

@@ -17,6 +17,6 @@ public class ExceptionControllerAdvice {
 	public ResponseEntity<ErrorResponse> runTimeExceptionHandler(RuntimeException ex) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ErrorResponse error = new ErrorResponse(status.value(), ex.getMessage());
-		return new ResponseEntity<ErrorResponse>(error, status);
+		return new ResponseEntity<>(error, status);
 	}
 }
